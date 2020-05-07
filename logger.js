@@ -10,7 +10,7 @@ class Logger extends EventEmitter {
 
 const logger = new Logger();
 
-logger.on('message', (data) => console.log(`Called Listener`, data));
+logger.on(`message`, (data) => console.log(data));
 
 logger.log('Hello World');
 
