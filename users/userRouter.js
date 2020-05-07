@@ -59,11 +59,27 @@ router.get('/:id/posts', validateUserId, (req, res) => {
 });
 
 router.delete('/:id', (req, res) => {
-	// do your magic!
+	userDb
+		.remove(req.params.id)
+		.then((users) => {
+			res.status(200).json(users);
+		})
+		.catch((err) => {
+			if (!req.params.id) {
+				return res.status(404).json({ message: 'Error with removing the user' });
+			}
+		});
 });
 
-router.put('/:id', (req, res) => {
-	// do your magic!
+router.put('/:id', validateUser, validateUserId, (req, res) => {
+	userDb
+		.update(req.params.id, req.body)
+		.then((newUser) => {
+			res.status(200).json(newUser);
+		})
+		.catch((err) => {
+			res.status(404).json({ message: 'Error with updating the inforamtion' });
+		});
 });
 
 //custom middleware
